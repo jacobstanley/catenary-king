@@ -1,5 +1,5 @@
 (function(){
-  var a3, t3, scene, renderer, camera, world, rigThree, rigAmmo, rigVolume, floatThree, render, update, logged, simulateBuoyancy, updateScene;
+  var a3, t3, scene, renderer, camera, world, rigThree, rigAmmo, rigVolume, floatThree, render, time, update, logged, simulateBuoyancy, updateScene;
   import$(this, prelude);
   a3 = function(x, y, z){
     return new Ammo.btVector3(x, y, z);
@@ -122,9 +122,14 @@
     renderer.render(scene, camera);
     return requestAnimationFrame(render);
   };
+  time = new Date().getTime();
   update = function(){
+    var curr, diff;
     simulateBuoyancy();
-    world.stepSimulation(1 / 60, 5);
+    curr = new Date().getTime();
+    diff = (curr - time) / 1000.0;
+    time = curr;
+    world.stepSimulation(diff, 10);
     return updateScene();
   };
   logged = false;

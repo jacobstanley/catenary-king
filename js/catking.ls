@@ -135,9 +135,15 @@ render = ->
   renderer.render scene, camera
   request-animation-frame render
 
+time = new Date!.get-time!
 update = ->
   simulate-buoyancy!
-  world.step-simulation 1/60, 5
+
+  curr = new Date!.get-time!
+  diff = (curr - time) / 1000.0
+  time := curr
+
+  world.step-simulation diff, 10
   update-scene!
 
 logged = false
