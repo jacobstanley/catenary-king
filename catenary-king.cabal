@@ -1,0 +1,13 @@
+name:                catenary-king
+version:             0.1.0.0
+license:             AllRightsReserved
+author:              Jacob Stanley
+maintainer:          jacob@stanley.io
+category:            Game
+build-type:          Simple
+cabal-version:       >=1.8
+
+library
+  hs-source-dirs: src
+  build-depends:
+    fay-base == 0.14.*
