@@ -45,6 +45,9 @@ addChild = ffi "%1.add(%2)"
 setPosition :: Object3D a => Double -> Double -> Double -> a -> Fay ()
 setPosition = ffi "%4.position.set(%1,%2,%3)"
 
+setRotation :: Object3D a => Double -> Double -> Double -> Double -> a -> Fay ()
+setRotation = ffi "%5.rotation.set(%1,%2,%3,%4)"
+
 setCastShadow :: Object3D a => Bool -> a -> Fay ()
 setCastShadow = ffi "%2.castShadow = %1"
 

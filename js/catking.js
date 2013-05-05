@@ -2550,6 +2550,114 @@ var DOM$appendChild = function($p1){
     });
   };
 };
+var Math$V = function(vx){
+  return function(vy){
+    return function(vz){
+      return new Fay$$$(function(){
+        return new $_Math$V(vx,vy,vz);
+      });
+    };
+  };
+};
+var Math$vx = function(x){
+  return new Fay$$$(function(){
+    return Fay$$_(x).vx;
+  });
+};
+var Math$vy = function(x){
+  return new Fay$$$(function(){
+    return Fay$$_(x).vy;
+  });
+};
+var Math$vz = function(x){
+  return new Fay$$$(function(){
+    return Fay$$_(x).vz;
+  });
+};
+var Math$Q = function(qx){
+  return function(qy){
+    return function(qz){
+      return function(qw){
+        return new Fay$$$(function(){
+          return new $_Math$Q(qx,qy,qz,qw);
+        });
+      };
+    };
+  };
+};
+var Math$qx = function(x){
+  return new Fay$$$(function(){
+    return Fay$$_(x).qx;
+  });
+};
+var Math$qy = function(x){
+  return new Fay$$$(function(){
+    return Fay$$_(x).qy;
+  });
+};
+var Math$qz = function(x){
+  return new Fay$$$(function(){
+    return Fay$$_(x).qz;
+  });
+};
+var Math$qw = function(x){
+  return new Fay$$$(function(){
+    return Fay$$_(x).qw;
+  });
+};
+var Math$euler = function($p1){
+  return function($p2){
+    return function($p3){
+      return new Fay$$$(function(){
+        var roll = $p3;
+        var pitch = $p2;
+        var yaw = $p1;
+        return (function(){
+          var x = new Fay$$$(function(){
+            return Fay$$_(Fay$$_(Fay$$sub)(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(sinRoll))(cosPitch)))(cosYaw)))(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(cosRoll))(sinPitch)))(sinYaw));
+          });
+          var y = new Fay$$$(function(){
+            return Fay$$_(Fay$$_(Fay$$add)(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(cosRoll))(sinPitch)))(cosYaw)))(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(sinRoll))(cosPitch)))(sinYaw));
+          });
+          var z = new Fay$$$(function(){
+            return Fay$$_(Fay$$_(Fay$$sub)(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(cosRoll))(cosPitch)))(sinYaw)))(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(sinRoll))(sinPitch)))(cosYaw));
+          });
+          var w = new Fay$$$(function(){
+            return Fay$$_(Fay$$_(Fay$$add)(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(cosRoll))(cosPitch)))(cosYaw)))(Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(sinRoll))(sinPitch)))(sinYaw));
+          });
+          var cosYaw = new Fay$$$(function(){
+            return Fay$$_(Prelude$cos)(halfYaw);
+          });
+          var sinYaw = new Fay$$$(function(){
+            return Fay$$_(Prelude$sin)(halfYaw);
+          });
+          var cosPitch = new Fay$$$(function(){
+            return Fay$$_(Prelude$cos)(halfPitch);
+          });
+          var sinPitch = new Fay$$$(function(){
+            return Fay$$_(Prelude$sin)(halfPitch);
+          });
+          var cosRoll = new Fay$$$(function(){
+            return Fay$$_(Prelude$cos)(halfRoll);
+          });
+          var sinRoll = new Fay$$$(function(){
+            return Fay$$_(Prelude$sin)(halfRoll);
+          });
+          var halfYaw = new Fay$$$(function(){
+            return Fay$$_(Fay$$_(Fay$$mult)(yaw))(0.5);
+          });
+          var halfPitch = new Fay$$$(function(){
+            return Fay$$_(Fay$$_(Fay$$mult)(pitch))(0.5);
+          });
+          var halfRoll = new Fay$$$(function(){
+            return Fay$$_(Fay$$_(Fay$$mult)(roll))(0.5);
+          });
+          return Fay$$_(Fay$$_(Fay$$_(Fay$$_(Math$Q)(x))(y))(z))(w);
+        })();
+      });
+    };
+  };
+};
 var Three$hex = function($p1){
   return new Fay$$$(function(){
     var x = $p1;
@@ -2615,6 +2723,19 @@ var Three$setPosition = function($p1){
         return new Fay$$$(function(){
           return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["unknown"],$p4).position.set(Fay$$fayToJs_double($p1),Fay$$fayToJs_double($p2),Fay$$fayToJs_double($p3))));
         });
+      };
+    };
+  };
+};
+var Three$setRotation = function($p1){
+  return function($p2){
+    return function($p3){
+      return function($p4){
+        return function($p5){
+          return new Fay$$$(function(){
+            return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["unknown"],$p5).rotation.set(Fay$$fayToJs_double($p1),Fay$$fayToJs_double($p2),Fay$$fayToJs_double($p3),Fay$$fayToJs_double($p4))));
+          });
+        };
       };
     };
   };
@@ -2757,6 +2878,246 @@ var Three$setTransparent = function($p1){
     });
   };
 };
+var Ammo$mkDefaultCollisionConfiguration = new Fay$$$(function(){
+  return new Fay$$Monad(Fay$$jsToFay(["user","CollisionConfiguration",[]],new Ammo.btDefaultCollisionConfiguration()));
+});
+var Ammo$mkCollisionDispatcher = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","Dispatcher",[]],new Ammo.btCollisionDispatcher(Fay$$fayToJs(["user","CollisionConfiguration",[]],$p1))));
+  });
+};
+var Ammo$mkDbvtBroadphase = new Fay$$$(function(){
+  return new Fay$$Monad(Fay$$jsToFay(["user","BroadphaseInterface",[]],new Ammo.btDbvtBroadphase()));
+});
+var Ammo$mkSequentialImpulseConstraintSolver = new Fay$$$(function(){
+  return new Fay$$Monad(Fay$$jsToFay(["user","ConstraintSolver",[]],new Ammo.btSequentialImpulseConstraintSolver()));
+});
+var Ammo$mkDiscreteDynamicsWorld = function($p1){
+  return function($p2){
+    return function($p3){
+      return function($p4){
+        return new Fay$$$(function(){
+          return new Fay$$Monad(Fay$$jsToFay(["user","DynamicsWorld",[]],new Ammo.btDiscreteDynamicsWorld(Fay$$fayToJs(["user","Dispatcher",[]],$p1),Fay$$fayToJs(["user","BroadphaseInterface",[]],$p2),Fay$$fayToJs(["user","ConstraintSolver",[]],$p3),Fay$$fayToJs(["user","CollisionConfiguration",[]],$p4))));
+        });
+      };
+    };
+  };
+};
+var Ammo$setGravity = function($p1){
+  return function($p2){
+    return function($p3){
+      return function($p4){
+        return new Fay$$$(function(){
+          return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","DynamicsWorld",[]],$p4).setGravity(new Ammo.btVector3(Fay$$fayToJs_double($p1),Fay$$fayToJs_double($p2),Fay$$fayToJs_double($p3)))));
+        });
+      };
+    };
+  };
+};
+var Ammo$addRigidBody = function($p1){
+  return function($p2){
+    return new Fay$$$(function(){
+      return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","DynamicsWorld",[]],$p1).addRigidBody(Fay$$fayToJs(["user","RigidBody",[]],$p2))));
+    });
+  };
+};
+var Ammo$stepSimulation = function($p1){
+  return function($p2){
+    return function($p3){
+      return new Fay$$$(function(){
+        return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","DynamicsWorld",[]],$p3).stepSimulation(Fay$$fayToJs_double($p1),Fay$$fayToJs_int($p2))));
+      });
+    };
+  };
+};
+var Ammo$mkBtVector3 = function($p1){
+  return function($p2){
+    return function($p3){
+      return new Fay$$$(function(){
+        return new Fay$$Monad(Fay$$jsToFay(["user","BtVector3",[]],new Ammo.btVector3(Fay$$fayToJs_double($p1),Fay$$fayToJs_double($p2),Fay$$fayToJs_double($p3))));
+      });
+    };
+  };
+};
+var Ammo$mkBtQuaternion = function($p1){
+  return function($p2){
+    return function($p3){
+      return function($p4){
+        return new Fay$$$(function(){
+          return new Fay$$Monad(Fay$$jsToFay(["user","BtQuaternion",[]],new Ammo.btQuaternion(Fay$$fayToJs_double($p1),Fay$$fayToJs_double($p2),Fay$$fayToJs_double($p3),Fay$$fayToJs_double($p4))));
+        });
+      };
+    };
+  };
+};
+var Ammo$vec2bt = function($p1){
+  return new Fay$$$(function(){
+    if (Fay$$_($p1) instanceof $_Math$V) {
+      var x = Fay$$_($p1).vx;
+      var y = Fay$$_($p1).vy;
+      var z = Fay$$_($p1).vz;
+      return Fay$$_(Fay$$_(Fay$$_(Ammo$mkBtVector3)(x))(y))(z);
+    }
+    throw ["unhandled case in vec2bt",[$p1]];
+  });
+};
+var Ammo$quat2bt = function($p1){
+  return new Fay$$$(function(){
+    if (Fay$$_($p1) instanceof $_Math$Q) {
+      var x = Fay$$_($p1).qx;
+      var y = Fay$$_($p1).qy;
+      var z = Fay$$_($p1).qz;
+      var w = Fay$$_($p1).qw;
+      return Fay$$_(Fay$$_(Fay$$_(Fay$$_(Ammo$mkBtQuaternion)(x))(y))(z))(w);
+    }
+    throw ["unhandled case in quat2bt",[$p1]];
+  });
+};
+var Ammo$bt2vec = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","Vector3",[]],{ instance: 'Vector3', vx: Fay$$fayToJs(["user","BtVector3",[]],$p1).x(), vy: Fay$$fayToJs(["user","BtVector3",[]],$p1).y(), vz: Fay$$fayToJs(["user","BtVector3",[]],$p1).z() }));
+  });
+};
+var Ammo$bt2quat = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","Quaternion",[]],{ instance: 'Quaternion', qx: Fay$$fayToJs(["user","BtQuaternion",[]],$p1).x(), qy: Fay$$fayToJs(["user","BtQuaternion",[]],$p1).y(), qz: Fay$$fayToJs(["user","BtQuaternion",[]],$p1).z(), qw: Fay$$fayToJs(["user","BtQuaternion",[]],$p1).w() }));
+  });
+};
+var Ammo$mkTransform = new Fay$$$(function(){
+  return new Fay$$Monad(Fay$$jsToFay(["user","Transform",[]],new Ammo.btTransform()));
+});
+var Ammo$setIdentity = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","Transform",[]],$p1).setIdentity()));
+  });
+};
+var Ammo$bt_setOrigin = function($p1){
+  return function($p2){
+    return new Fay$$$(function(){
+      return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","Transform",[]],$p2).setOrigin(Fay$$fayToJs(["user","BtVector3",[]],$p1))));
+    });
+  };
+};
+var Ammo$bt_getOrigin = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","BtVector3",[]],Fay$$fayToJs(["user","Transform",[]],$p1).getOrigin()));
+  });
+};
+var Ammo$getOrigin = function($p1){
+  return new Fay$$$(function(){
+    var t = $p1;
+    return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$bt_getOrigin)(t)))(Ammo$bt2vec)))(function($p1){
+      var v = $p1;
+      return Fay$$_(Fay$$_(Prelude$$36$)(Fay$$$_return))(Fay$$_(Fay$$_(Fay$$_(Math$V)(Fay$$_(Math$vx)(v)))(Fay$$_(Math$vy)(v)))(Fay$$_(Math$vz)(v)));
+    });
+  });
+};
+var Ammo$setOrigin = function($p1){
+  return function($p2){
+    return new Fay$$$(function(){
+      var t = $p2;
+      var v = $p1;
+      return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$vec2bt)(v)))(function($p1){
+        var x = $p1;
+        return Fay$$_(Fay$$_(Ammo$bt_setOrigin)(x))(t);
+      });
+    });
+  };
+};
+var Ammo$bt_setOrientation = function($p1){
+  return function($p2){
+    return new Fay$$$(function(){
+      return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","Transform",[]],$p2).setRotation(Fay$$fayToJs(["user","BtQuaternion",[]],$p1))));
+    });
+  };
+};
+var Ammo$bt_getOrientation = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","BtQuaternion",[]],Fay$$fayToJs(["user","Transform",[]],$p1).getRotation()));
+  });
+};
+var Ammo$getOrientation = function($p1){
+  return new Fay$$$(function(){
+    var t = $p1;
+    return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$bt_getOrientation)(t)))(Ammo$bt2quat)))(function($p1){
+      var q = $p1;
+      return Fay$$_(Fay$$_(Prelude$$36$)(Fay$$$_return))(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Math$Q)(Fay$$_(Math$qx)(q)))(Fay$$_(Math$qy)(q)))(Fay$$_(Math$qz)(q)))(Fay$$_(Math$qw)(q)));
+    });
+  });
+};
+var Ammo$setOrientation = function($p1){
+  return function($p2){
+    return new Fay$$$(function(){
+      var t = $p2;
+      var q = $p1;
+      return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$quat2bt)(q)))(function($p1){
+        var x = $p1;
+        return Fay$$_(Fay$$_(Ammo$bt_setOrientation)(x))(t);
+      });
+    });
+  };
+};
+var Ammo$mkBoxShape = function($p1){
+  return function($p2){
+    return function($p3){
+      return new Fay$$$(function(){
+        return new Fay$$Monad(Fay$$jsToFay(["user","Shape",[]],new Ammo.btBoxShape(new Ammo.btVector3(Fay$$fayToJs_double($p1),Fay$$fayToJs_double($p2),Fay$$fayToJs_double($p3)))));
+      });
+    };
+  };
+};
+var Ammo$calculateLocalInertia = function($p1){
+  return function($p2){
+    return function($p3){
+      return function($p4){
+        return function($p5){
+          return new Fay$$$(function(){
+            return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","Shape",[]],$p5).calculateLocalInertia(Fay$$fayToJs_double($p1),new Ammo.btVector3(Fay$$fayToJs_double($p2),Fay$$fayToJs_double($p3),Fay$$fayToJs_double($p4)))));
+          });
+        };
+      };
+    };
+  };
+};
+var Ammo$mkDefaultMotionState = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","MotionState",[]],new Ammo.btDefaultMotionState(Fay$$fayToJs(["user","Transform",[]],$p1))));
+  });
+};
+var Ammo$getWorldTransform = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","Transform",[]],(function () { var t = new Ammo.btTransform(); Fay$$fayToJs(["user","MotionState",[]],$p1).getWorldTransform(t); return t; })()));
+  });
+};
+var Ammo$mkRigidBody = function($p1){
+  return function($p2){
+    return function($p3){
+      return function($p4){
+        return function($p5){
+          return function($p6){
+            return new Fay$$$(function(){
+              return new Fay$$Monad(Fay$$jsToFay(["user","RigidBody",[]],new Ammo.btRigidBody(new Ammo.btRigidBodyConstructionInfo(Fay$$fayToJs_double($p1),Fay$$fayToJs(["user","MotionState",[]],$p2),Fay$$fayToJs(["user","Shape",[]],$p3),new Ammo.btVector3(Fay$$fayToJs_double($p4),Fay$$fayToJs_double($p5),Fay$$fayToJs_double($p6))))));
+            });
+          };
+        };
+      };
+    };
+  };
+};
+var Ammo$setDamping = function($p1){
+  return function($p2){
+    return function($p3){
+      return new Fay$$$(function(){
+        return new Fay$$Monad(Fay$$jsToFay(["unknown"],Fay$$fayToJs(["user","RigidBody",[]],$p3).setDamping(Fay$$fayToJs_double($p1),Fay$$fayToJs_double($p2))));
+      });
+    };
+  };
+};
+var Ammo$getMotionState = function($p1){
+  return new Fay$$$(function(){
+    return new Fay$$Monad(Fay$$jsToFay(["user","MotionState",[]],Fay$$fayToJs(["user","RigidBody",[]],$p1).getMotionState()));
+  });
+};
 var CatenaryKing$main = new Fay$$$(function(){
   return Fay$$_(Fay$$_(Fay$$bind)(DOM$getWindowWidth))(function($p1){
     var width = $p1;
@@ -2772,7 +3133,7 @@ var CatenaryKing$main = new Fay$$$(function(){
               var seafloor = $p1;
               return Fay$$_(Fay$$_(Fay$$bind)(CatenaryKing$mkOcean))(function($p1){
                 var ocean = $p1;
-                return Fay$$_(Fay$$_(Fay$$bind)(CatenaryKing$mkOilRig))(function($p1){
+                return Fay$$_(Fay$$_(Fay$$bind)(CatenaryKing$mkRig))(function($p1){
                   var rig = $p1;
                   return Fay$$_(Fay$$_(Fay$$bind)(Three$mkScene))(function($p1){
                     var scene = $p1;
@@ -2782,7 +3143,36 @@ var CatenaryKing$main = new Fay$$$(function(){
                     }))(lights)))(Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Prelude$mapM_)(function($p1){
                       var $gen_1 = $p1;
                       return Fay$$_(Fay$$_(Three$addChild)(scene))($gen_1);
-                    }))(Fay$$list([seafloor,ocean,rig]))))(Fay$$_(Fay$$_(Prelude$$36$)(CatenaryKing$animate))(Fay$$_(Fay$$_(Fay$$_(Three$render)(scene))(camera))(renderer)))));
+                    }))(Fay$$list([seafloor,ocean,rig]))))(Fay$$_(Fay$$_(Fay$$bind)(CatenaryKing$mkAmmoWorld))(function($p1){
+                      var world = $p1;
+                      return Fay$$_(Fay$$_(Fay$$bind)(CatenaryKing$mkRigBody))(function($p1){
+                        var rigB = $p1;
+                        return Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Ammo$addRigidBody)(world))(rigB)))(Fay$$_(Fay$$_(Prelude$$36$)(CatenaryKing$animate))(Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Fay$$_(Ammo$stepSimulation)(Fay$$_(Fay$$_(Fay$$divi)(1.0))(60.0)))(10))(world)))(Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$getMotionState)(rigB)))(function($p1){
+                          var motion = $p1;
+                          return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$getWorldTransform)(motion)))(function($p1){
+                            var transform = $p1;
+                            return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$getOrigin)(transform)))(function($p1){
+                              if (Fay$$_($p1) instanceof $_Math$V) {
+                                var px = Fay$$_($p1).vx;
+                                var py = Fay$$_($p1).vy;
+                                var pz = Fay$$_($p1).vz;
+                                return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$getOrientation)(transform)))(function($p1){
+                                  if (Fay$$_($p1) instanceof $_Math$Q) {
+                                    var rx = Fay$$_($p1).qx;
+                                    var ry = Fay$$_($p1).qy;
+                                    var rz = Fay$$_($p1).qz;
+                                    var rw = Fay$$_($p1).qw;
+                                    return Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Three$setPosition)(px))(py))(pz))(rig)))(Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Three$setRotation)(rx))(ry))(rz))(rw))(rig)))(Fay$$_(Fay$$_(Fay$$_(Three$render)(scene))(camera))(renderer)));
+                                  }
+                                  throw ["unhandled case",$p1];
+                                });
+                              }
+                              throw ["unhandled case",$p1];
+                            });
+                          });
+                        }))));
+                      });
+                    }))));
                   });
                 });
               });
@@ -2876,7 +3266,7 @@ var CatenaryKing$mkOcean = new Fay$$$(function(){
     });
   });
 });
-var CatenaryKing$mkOilRig = new Fay$$$(function(){
+var CatenaryKing$mkRig = new Fay$$$(function(){
   return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Fay$$_(Fay$$_(Three$mkCubeGeometry)(100))(100))(15)))(function($p1){
     var geom = $p1;
     return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Three$mkMeshLambertMaterial)(Fay$$_(Three$hex)(3364147))))(function($p1){
@@ -2886,6 +3276,45 @@ var CatenaryKing$mkOilRig = new Fay$$$(function(){
         return Fay$$_(Fay$$_(CatenaryKing$$_with)(mesh))(Fay$$list([Fay$$_(Three$setCastShadow)(true),Fay$$_(Three$setReceiveShadow)(true),Fay$$_(Three$setUseQuaternion)(true),Fay$$_(Fay$$_(Fay$$_(Three$setPosition)(0))(0))(100)]));
       });
     });
+  });
+});
+var CatenaryKing$mkAmmoWorld = new Fay$$$(function(){
+  return Fay$$_(Fay$$_(Fay$$bind)(Ammo$mkDefaultCollisionConfiguration))(function($p1){
+    var collisionCfg = $p1;
+    return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$mkCollisionDispatcher)(collisionCfg)))(function($p1){
+      var dispatcher = $p1;
+      return Fay$$_(Fay$$_(Fay$$bind)(Ammo$mkDbvtBroadphase))(function($p1){
+        var broadphase = $p1;
+        return Fay$$_(Fay$$_(Fay$$bind)(Ammo$mkSequentialImpulseConstraintSolver))(function($p1){
+          var solver = $p1;
+          return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Ammo$mkDiscreteDynamicsWorld)(dispatcher))(broadphase))(solver))(collisionCfg)))(function($p1){
+            var world = $p1;
+            return Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Ammo$setGravity)(0))(0))((-(9.8))))(world)))(Fay$$_(Fay$$$_return)(world));
+          });
+        });
+      });
+    });
+  });
+});
+var CatenaryKing$mkRigBody = new Fay$$$(function(){
+  var volume = new Fay$$$(function(){
+    return Fay$$_(Fay$$_(Fay$$mult)(Fay$$_(Fay$$_(Fay$$mult)(100))(100)))(15);
+  });
+  var mass = new Fay$$$(function(){
+    return Fay$$_(Fay$$_(Fay$$mult)(volume))(700);
+  });
+  return Fay$$_(Fay$$_(Fay$$bind)(Ammo$mkTransform))(function($p1){
+    var transform = $p1;
+    return Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(CatenaryKing$$_with)(transform))(Fay$$list([Ammo$setIdentity,Fay$$_(Ammo$setOrigin)(Fay$$_(Fay$$_(Fay$$_(Math$V)(0))(0))(100)),Fay$$_(Fay$$_(Prelude$$36$)(Ammo$setOrientation))(Fay$$_(Fay$$_(Fay$$_(Math$euler)(0))(Fay$$_(Fay$$_(Fay$$divi)(Prelude$pi))(16.0)))((-(Fay$$_(Fay$$_(Fay$$_(Fay$$divi)(Prelude$pi))(8.0))))))]))))(Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Fay$$_(Fay$$_(Ammo$mkBoxShape)(100))(100))(15)))(function($p1){
+      var shape = $p1;
+      return Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Ammo$calculateLocalInertia)(mass))(0))(0))(0))(shape)))(Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Ammo$mkDefaultMotionState)(transform)))(function($p1){
+        var motionState = $p1;
+        return Fay$$_(Fay$$_(Fay$$bind)(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Fay$$_(Ammo$mkRigidBody)(mass))(motionState))(shape))(0))(0))(0)))(function($p1){
+          var body = $p1;
+          return Fay$$_(Fay$$_(Fay$$then)(Fay$$_(Fay$$_(Fay$$_(Ammo$setDamping)(0.2))(0.2))(body)))(Fay$$_(Fay$$$_return)(body));
+        });
+      }));
+    }));
   });
 });
 var CatenaryKing$$_with = function($p1){
@@ -2930,6 +3359,17 @@ var $_Prelude$GT = function(){
 var $_Prelude$LT = function(){
 };
 var $_Prelude$EQ = function(){
+};
+var $_Math$V = function(vx,vy,vz){
+  this.vx = vx;
+  this.vy = vy;
+  this.vz = vz;
+};
+var $_Math$Q = function(qx,qy,qz,qw){
+  this.qx = qx;
+  this.qy = qy;
+  this.qz = qz;
+  this.qw = qw;
 };
 var Fay$$fayToJsUserDefined = function(type,obj){
   var _obj = Fay$$_(obj);
@@ -3010,6 +3450,42 @@ var Fay$$fayToJsUserDefined = function(type,obj){
     var obj_ = {"instance": "EQ"};
     return obj_;
   }
+  if (_obj instanceof $_Math$V) {
+    var obj_ = {"instance": "V"};
+    var obj_vx = Fay$$fayToJs_double(_obj.vx);
+    if (undefined !== obj_vx) {
+      obj_['vx'] = obj_vx;
+    }
+    var obj_vy = Fay$$fayToJs_double(_obj.vy);
+    if (undefined !== obj_vy) {
+      obj_['vy'] = obj_vy;
+    }
+    var obj_vz = Fay$$fayToJs_double(_obj.vz);
+    if (undefined !== obj_vz) {
+      obj_['vz'] = obj_vz;
+    }
+    return obj_;
+  }
+  if (_obj instanceof $_Math$Q) {
+    var obj_ = {"instance": "Q"};
+    var obj_qx = Fay$$fayToJs_double(_obj.qx);
+    if (undefined !== obj_qx) {
+      obj_['qx'] = obj_qx;
+    }
+    var obj_qy = Fay$$fayToJs_double(_obj.qy);
+    if (undefined !== obj_qy) {
+      obj_['qy'] = obj_qy;
+    }
+    var obj_qz = Fay$$fayToJs_double(_obj.qz);
+    if (undefined !== obj_qz) {
+      obj_['qz'] = obj_qz;
+    }
+    var obj_qw = Fay$$fayToJs_double(_obj.qw);
+    if (undefined !== obj_qw) {
+      obj_['qw'] = obj_qw;
+    }
+    return obj_;
+  }
   return obj;
 };
 var Fay$$jsToFayUserDefined = function(type,obj){
@@ -3050,17 +3526,25 @@ var Fay$$jsToFayUserDefined = function(type,obj){
   if (obj["instance"] === "EQ") {
     return new $_Prelude$EQ();
   }
+  if (obj["instance"] === "V") {
+    return new $_Math$V(Fay$$jsToFay_double(obj["vx"]),Fay$$jsToFay_double(obj["vy"]),Fay$$jsToFay_double(obj["vz"]));
+  }
+  if (obj["instance"] === "Q") {
+    return new $_Math$Q(Fay$$jsToFay_double(obj["qx"]),Fay$$jsToFay_double(obj["qy"]),Fay$$jsToFay_double(obj["qz"]),Fay$$jsToFay_double(obj["qw"]));
+  }
   return obj;
 };
 
 // Exports
 this.CatenaryKing$animate = CatenaryKing$animate;
 this.CatenaryKing$main = CatenaryKing$main;
+this.CatenaryKing$mkAmmoWorld = CatenaryKing$mkAmmoWorld;
 this.CatenaryKing$mkCamera = CatenaryKing$mkCamera;
 this.CatenaryKing$mkLights = CatenaryKing$mkLights;
 this.CatenaryKing$mkOcean = CatenaryKing$mkOcean;
-this.CatenaryKing$mkOilRig = CatenaryKing$mkOilRig;
 this.CatenaryKing$mkRenderer = CatenaryKing$mkRenderer;
+this.CatenaryKing$mkRig = CatenaryKing$mkRig;
+this.CatenaryKing$mkRigBody = CatenaryKing$mkRigBody;
 this.CatenaryKing$mkSeafloor = CatenaryKing$mkSeafloor;
 this.CatenaryKing$$_with = CatenaryKing$$_with;
 

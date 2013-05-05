@@ -3,7 +3,9 @@ module CatenaryKing where
 import Prelude
 
 import DOM
+import Math
 import Three
+import Ammo
 
 ------------------------------------------------------------------------
 
@@ -18,15 +20,38 @@ main = do
 
     seafloor <- mkSeafloor
     ocean    <- mkOcean
-    rig      <- mkOilRig
+    rig      <- mkRig
 
     scene <- mkScene
     scene `addChild` camera
     mapM_ (scene `addChild`) lights
     mapM_ (scene `addChild`) [seafloor, ocean, rig]
 
+    world <- mkAmmoWorld
+    rigB  <- mkRigBody
+    world `addRigidBody` rigB
+
     animate $ do
+        stepSimulation (1.0/60.0) 10 world
+
+        motion          <- getMotionState rigB
+        transform       <- getWorldTransform motion
+        (V px py pz)    <- getOrigin transform
+        (Q rx ry rz rw) <- getOrientation transform
+
+        setPosition px py pz rig
+        setRotation rx ry rz rw rig
+
         render scene camera renderer
+
+-- update-scene = ->
+--   t = new Ammo.bt-transform!
+--   rig-ammo.get-motion-state!.get-world-transform t
+--
+--   pos = t.get-origin!
+--   rot = t.get-rotation!
+--   rig-three.position.set   pos.x!, pos.y!, pos.z!
+--   rig-three.quaternion.set rot.x!, rot.y!, rot.z!, rot.w!
 
 animate :: Fay () -> Fay ()
 animate go = requestAnimationFrame (go >> animate go)
@@ -98,8 +123,8 @@ mkOcean = do
 
     return mesh
 
-mkOilRig :: Fay Mesh
-mkOilRig = do
+mkRig :: Fay Mesh
+mkRig = do
     geom <- mkCubeGeometry 100 100 15
     mat  <- mkMeshLambertMaterial (hex 0x335533)
     mesh <- mkMesh geom mat
@@ -110,6 +135,43 @@ mkOilRig = do
       , setUseQuaternion True
       , setPosition 0 0 100
       ]
+
+------------------------------------------------------------------------
+-- Ammo
+
+mkAmmoWorld :: Fay DynamicsWorld
+mkAmmoWorld = do
+  collisionCfg <- mkDefaultCollisionConfiguration
+  dispatcher   <- mkCollisionDispatcher collisionCfg
+  broadphase   <- mkDbvtBroadphase
+  solver       <- mkSequentialImpulseConstraintSolver
+  world        <- mkDiscreteDynamicsWorld dispatcher broadphase solver collisionCfg
+
+  setGravity 0 0 (-9.8) world
+
+  return world
+
+mkRigBody :: Fay RigidBody
+mkRigBody = do
+    transform <- mkTransform
+    with transform
+        [ setIdentity
+        , setOrigin (V 0 0 100)
+        , setOrientation $ euler 0 (pi/16.0) (-pi/8.0)
+        ]
+
+    shape <- mkBoxShape 100 100 15
+    calculateLocalInertia mass 0 0 0 shape
+
+    motionState <- mkDefaultMotionState transform
+
+    body <- mkRigidBody mass motionState shape 0 0 0
+    setDamping 0.2 0.2 body
+
+    return body
+  where
+    volume = 100 * 100 * 15
+    mass = volume * 700
 
 ------------------------------------------------------------------------
 -- Utils
