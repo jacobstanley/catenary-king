@@ -3,11 +3,16 @@ import prelude
 a3 = (x, y, z) -> new Ammo.bt-vector3 x, y, z
 t3 = (x, y, z) -> new THREE.Vector3 x, y, z
 
+ac3 = (v) -> new Ammo.bt-vector3 v.x!, v.y!, v.z!
+
 scene    = null
 renderer = null
 camera   = null
 
 world    = null
+
+ocean = null
+waterline = 0
 
 rig-three  = null
 #rig-three2 = null
@@ -41,10 +46,12 @@ window.onload = ->
   # Lights
   new THREE.DirectionalLight 0xffffff
     #..shadow-camera-visible = true
-    #..shadow-camera-left    = -150
-    #..shadow-camera-right   = 150
-    #..shadow-camera-top     = 150
-    #..shadow-camera-bottom  = -150
+    #..shadow-camera-left    = -300
+    #..shadow-camera-right   = 300
+    #..shadow-camera-top     = 300
+    #..shadow-camera-bottom  = -300
+    ..shadow-map-width = 2048
+    ..shadow-map-height = 2048
     ..position.set -300, 300, 500
     ..cast-shadow = true
     .. |> scene.add
@@ -62,15 +69,15 @@ window.onload = ->
   world.set-gravity new Ammo.bt-vector3 0, 0, -9.8
 
   # Camera
-  near = 1
-  far  = 1000
-  zoom = 0.5
+  near = 0
+  far  = 3000
+  zoom = 1.0
   left = -width * 0.5 * zoom
   top  = height * 0.5 * zoom
 
   camera := new THREE.OrthographicCamera left, -left, top, -top, near, far
       ..up = t3 0, 0, 1
-      ..position.set -300, -300, 245
+      ..position.set -900, -900, 735
       ..lookAt t3 0, 0, 0
       .. |> scene.add
 
@@ -96,7 +103,7 @@ window.onload = ->
   # Ocean
   ocean-g = new THREE.PlaneGeometry 2000, 2000
   ocean-m = new THREE.MeshBasicMaterial color: 0x112244, transparent: true, opacity: 0.8
-  new THREE.Mesh ocean-g, ocean-m
+  ocean := new THREE.Mesh ocean-g, ocean-m
     ..receive-shadow = true
     .. |> scene.add
 
@@ -133,13 +140,13 @@ window.onload = ->
       .. |> scene.add
 
   rig-volume := 85 * 85 * 15
-  rig-mass = rig-volume * 700
+  rig-mass = rig-volume * 1100
   rig-rotation = new Ammo.bt-quaternion!
-    ..set-euler -pi/8.0, pi/16.0, pi/2.0
-    #..set-euler 0, 0, 0
+    #..set-euler -pi/8.0, pi/16.0, pi/2.0
+    ..set-euler 0, 0, 0
   rig-transform = new Ammo.bt-transform!
     ..set-identity!
-    ..set-origin (a3 0, 0, 100)
+    ..set-origin (a3 0, 0, 0)
     ..set-rotation rig-rotation
   rig-inertia = a3 0, 0, 0
   rig-shape = new Ammo.bt-box-shape a3 85/2.0, 85/2.0, 15/2.0
@@ -170,25 +177,66 @@ update = ->
   diff = (curr - time) / 1000.0
   time := curr
 
-  impulse = 1000000000 * diff
-
-  if keys[KEY_UP]
-    rig-ammo.apply-impulse (a3 0, impulse, 0), (a3 0 -80 0)
-  if keys[KEY_DOWN]
-    rig-ammo.apply-impulse (a3 0, -impulse, 0), (a3 0 -80 0)
-  if keys[KEY_LEFT]
-    rig-ammo.apply-impulse (a3 -impulse, 0, 0), (a3 80 80 0)
-  if keys[KEY_RIGHT]
-    rig-ammo.apply-impulse (a3 impulse, 0 0), (a3 -80 80 0)
-
-  simulate-buoyancy diff
-  world.step-simulation diff, 10
+  dt = min diff, (5/60.0)
+  apply-user-input dt
+  update-ocean dt
+  simulate-buoyancy dt
+  world.step-simulation dt, 5
 
   update-scene!
 
+apply-user-input = (dt) ->
+  world-trans = new Ammo.bt-transform!
+  rig-ammo.get-motion-state!.get-world-transform world-trans
 
-alsdfkj = 0
-logged = false
+  impulse-factor = 1000000000 * dt
+  impulse-mag = 0
+
+  outboard-local = a3 0, -40, -10
+  outboard-world = world-trans.op_mul outboard-local
+
+  if outboard-world.z! > waterline
+    # outboard's not in the water m8!
+    return
+
+  cog = rig-ammo.get-center-of-mass-position!
+  outboard-rel = (ac3 outboard-world).op_sub cog
+
+  outboard-yaw = 0
+
+  if keys[KEY_LEFT]
+    outboard-yaw -= pi/16.0
+  if keys[KEY_RIGHT]
+    outboard-yaw += pi/16.0
+  if keys[KEY_UP]
+    impulse-mag += impulse-factor
+  if keys[KEY_DOWN]
+    impulse-mag -= impulse-factor
+
+  if impulse-mag == 0
+    return
+
+  world-rot = new Ammo.bt-transform!
+    ..set-rotation world-trans.get-rotation!
+  outboard-rot = new Ammo.bt-transform!
+    ..set-rotation (new Ammo.bt-quaternion 0, 0, outboard-yaw)
+  final-rot = new Ammo.bt-transform!
+    ..mult world-rot, outboard-rot
+
+  impulse = final-rot.op_mul (a3 0, impulse-mag, 0)
+
+  rig-ammo.apply-impulse impulse, outboard-rel
+  #rig-ammo.apply-central-impulse (a3 0, 0, impulse-mag * 0.1)
+
+ocean-time = 0
+update-ocean = (dt) ->
+  ocean-time += dt
+
+  swell = 20m
+  period = 15s
+  waterline := swell * sin (ocean-time/(period/4.0))
+  ocean.position.z = waterline
+
 simulate-buoyancy = (dt) ->
   t = new Ammo.bt-transform!
   rig-ammo.get-motion-state!.get-world-transform t
@@ -212,7 +260,8 @@ simulate-buoyancy = (dt) ->
 
     height = 25
     hheight = height/2.0
-    offset = height - (hheight + min(hheight, max(-hheight, tf.z!)))
+    water-diff = tf.z! - waterline
+    offset = height - (hheight + min(hheight, max(-hheight, water-diff)))
     volume-displaced = (rig-volume/floats.length) * (offset / hheight)
 
     if volume-displaced <= 0
