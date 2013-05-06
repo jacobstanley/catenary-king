@@ -133,7 +133,7 @@ window.onload = ->
       .. |> scene.add
 
   rig-volume := 85 * 85 * 15
-  rig-mass = rig-volume * 10000
+  rig-mass = rig-volume * 700
   rig-rotation = new Ammo.bt-quaternion!
     ..set-euler -pi/8.0, pi/16.0, pi/2.0
     #..set-euler 0, 0, 0
@@ -160,34 +160,36 @@ window.onload = ->
 
 render = ->
   if rig-three
-    if keys[KEY_UP]
-      rig-ammo.apply-impulse (a3 0 0 1000000000), (a3 0 0 0)
-    if keys[KEY_DOWN]
-      rig-ammo.apply-impulse (a3 0 0 100000000), (a3 0 -80 0)
-    if keys[KEY_LEFT]
-      rig-ammo.apply-impulse (a3 -100000000 0 0), (a3 80 80 0)
-    if keys[KEY_RIGHT]
-      rig-ammo.apply-impulse (a3 100000000 0 0), (a3 -80 80 0)
-
     update!
     renderer.render scene, camera
   request-animation-frame render
 
 time = new Date!.get-time!
 update = ->
-  simulate-buoyancy!
-
   curr = new Date!.get-time!
   diff = (curr - time) / 1000.0
   time := curr
 
+  impulse = 1000000000 * diff
+
+  if keys[KEY_UP]
+    rig-ammo.apply-impulse (a3 0, impulse, 0), (a3 0 -80 0)
+  if keys[KEY_DOWN]
+    rig-ammo.apply-impulse (a3 0, -impulse, 0), (a3 0 -80 0)
+  if keys[KEY_LEFT]
+    rig-ammo.apply-impulse (a3 -impulse, 0, 0), (a3 80 80 0)
+  if keys[KEY_RIGHT]
+    rig-ammo.apply-impulse (a3 impulse, 0 0), (a3 -80 80 0)
+
+  simulate-buoyancy diff
   world.step-simulation diff, 10
+
   update-scene!
 
 
 alsdfkj = 0
 logged = false
-simulate-buoyancy = ->
+simulate-buoyancy = (dt) ->
   t = new Ammo.bt-transform!
   rig-ammo.get-motion-state!.get-world-transform t
 
@@ -219,7 +221,7 @@ simulate-buoyancy = ->
     pos = rig-ammo.get-center-of-mass-position!
     rf = tf.op_sub pos
 
-    buoyancy = 9.8 * fluid-density * volume-displaced
+    buoyancy = 9.8 * fluid-density * volume-displaced * dt
 
     rig-ammo.apply-impulse (a3 0, 0, buoyancy), rf
 
