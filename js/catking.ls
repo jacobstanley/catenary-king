@@ -46,12 +46,12 @@ window.onload = ->
   # Lights
   new THREE.DirectionalLight 0xffffff
     #..shadow-camera-visible = true
-    #..shadow-camera-left    = -300
-    #..shadow-camera-right   = 300
-    #..shadow-camera-top     = 300
-    #..shadow-camera-bottom  = -300
-    ..shadow-map-width = 2048
-    ..shadow-map-height = 2048
+    ..shadow-camera-left    = -700
+    ..shadow-camera-bottom  = -700
+    ..shadow-camera-right   = 700
+    ..shadow-camera-top     = 700
+    ..shadow-map-width      = 2048
+    ..shadow-map-height     = 2048
     ..position.set -300, 300, 500
     ..cast-shadow = true
     .. |> scene.add
@@ -82,17 +82,17 @@ window.onload = ->
       .. |> scene.add
 
   # Floor
-  floor-g = new THREE.PlaneGeometry 2000, 2000
+  floor-g = new THREE.PlaneGeometry 3000, 3000
   floor-m = new THREE.MeshBasicMaterial color: 0x333300
   new THREE.Mesh floor-g, floor-m
     ..receive-shadow = true
-    ..position.set 0, 0, -100
+    ..position.set 0, 0, -200
     .. |> scene.add
 
   floor-shape = new Ammo.bt-static-plane-shape (a3 0, 0, 1), 0
   floor-transform = new Ammo.bt-transform!
     ..set-identity!
-    ..set-origin a3 0, 0, -100
+    ..set-origin a3 0, 0, -200
   floor-mass = 0
   floor-inertia = a3 0, 0, 0
   floor-motion-state = new Ammo.bt-default-motion-state floor-transform
@@ -101,7 +101,7 @@ window.onload = ->
   world.add-rigid-body floor-ammo
 
   # Ocean
-  ocean-g = new THREE.PlaneGeometry 2000, 2000
+  ocean-g = new THREE.PlaneGeometry 3000, 3000
   ocean-m = new THREE.MeshBasicMaterial color: 0x112244, transparent: true, opacity: 0.8
   ocean := new THREE.Mesh ocean-g, ocean-m
     ..receive-shadow = true
@@ -117,20 +117,10 @@ window.onload = ->
     new THREE.Mesh float-g, mesh 0xffff00
   ]
 
-  for f in float-three
-    scene.add f
+  #for f in float-three
+  #  scene.add f
 
-  # Box
-  #rig-g = new THREE.CubeGeometry 85, 85, 15
-  #rig-m = new THREE.MeshLambertMaterial color: 0x335533
-  #  ..ambient = ..color
-  #rig-three2 := new THREE.Mesh rig-g, rig-m
-  #  ..cast-shadow = true
-  #  ..receive-shadow = true
-  #  ..use-quaternion = true
-  #  ..position.z = 100
-  #  .. |> scene.add
-
+  # Rig
   loader = new THREE.ColladaLoader!
   loader.load 'dae/rig.dae' (dae) ->
     rig-three := dae.scene
